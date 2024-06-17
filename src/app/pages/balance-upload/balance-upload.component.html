@@ -1,16 +1,26 @@
-<div class="contentWrapper">
+<div>
+  <div class="contentWrapper">
     <app-card>
-        <div class="content">
-            <h3>Upload Balance File</h3>
-        <form >
-        <input #fileInput type="file" (change)="onFileSelected($event)" />
-        <button (click)="onUpload()" type="submit" [disabled]="isUploadButtonDisabled">Upload</button>
+      <div class="content">
+        <h3>Upload Balance File</h3>
+        <form>
+          <input #fileInput type="file" (change)="onFileSelected($event)" />
+          <button
+            (click)="onUpload()"
+            type="submit"
+            [disabled]="isUploadButtonDisabled"
+          >
+            Upload
+          </button>
         </form>
-        </div>
+        <ul>
+          <li *ngFor="let date of availableBalanceDates">
+            {{ date | date }}
+          </li>
+        </ul>
+      </div>
     </app-card>
+  </div>
 </div>
 
-<app-loader *ngIf="showLoading"/>
-
-
-
+<app-loader *ngIf="showLoading" />

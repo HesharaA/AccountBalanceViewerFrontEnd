@@ -1,3 +1,9 @@
+div{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+ }
+
 
 .contentWrapper{
     margin-top: 5px;

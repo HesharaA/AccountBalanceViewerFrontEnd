@@ -1,10 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BalanceService } from '../../services/balance.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-balance-upload',
@@ -15,19 +16,32 @@ import { ReactiveFormsModule } from '@angular/forms';
     CardComponent,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './balance-upload.component.html',
   styleUrl: './balance-upload.component.css',
 })
-export class BalanceUploadComponent {
+export class BalanceUploadComponent implements OnInit {
   selectedFile: any;
   isUploadButtonDisabled: boolean = true;
   showLoading: boolean = false;
 
   @ViewChild('fileInput', { static: false })
   InputVar: ElementRef | any;
+  availableBalanceDates: Date[] = [];
 
   constructor(private balanceService: BalanceService) {}
+
+  ngOnInit(): void {
+    this.balanceService.getDistinctBalances().subscribe({
+      error: (e) => {
+        window.alert(e.error);
+      },
+      next: (data) => {
+        this.availableBalanceDates = data;
+      },
+    });
+  }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];

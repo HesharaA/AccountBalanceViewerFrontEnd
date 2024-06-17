@@ -21,6 +21,10 @@ export class BalanceService {
     return this.http.get<Balance[]>(this.apiUrl + '?date=' + date);
   }
 
+  getDistinctBalances(): Observable<Date[]> {
+    return this.http.get<Date[]>(this.apiUrl + '/distinct');
+  }
+
   uploadBalanceFile(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
