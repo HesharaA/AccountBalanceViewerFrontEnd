@@ -1,3 +1,15 @@
-<h2>Upload Balance File</h2>
-<input type="file" (change)="onFileSelected($event)" />
-<button (click)="onUpload()">Upload</button>
+<div class="contentWrapper">
+    <app-card>
+        <div class="content">
+            <h3>Upload Balance File</h3>
+        <form>
+        <input type="file" (change)="onFileSelected($event)" />
+        <button (click)="onUpload()" type="submit" [disabled]="isUploadButtonDisabled">Upload</button>
+        </form>
+        </div>
+    </app-card>
+</div>
+
+<app-loader *ngIf="showLoading"/>
+
+

@@ -1,0 +1,23 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+.navItems {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: small;
+}
+
+.name{
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+}
+
+.name > h1{
+    color: #e94f37;
+    font-size: 50px;
+}
