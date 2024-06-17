@@ -17,3 +17,18 @@ th{
 td{
     font-size: smaller;
 }
+
+.title{
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+h1, h5{
+    padding: 0px;
+    margin: 0px;
+}
+
+h5{
+    font-style:italic;
+}

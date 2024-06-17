@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class BalanceViewComponent implements OnInit {
   balances: Balance[] = [];
+  date: string = '2023.03.01';
 
   constructor(private balanceService: BalanceService) {}
 
