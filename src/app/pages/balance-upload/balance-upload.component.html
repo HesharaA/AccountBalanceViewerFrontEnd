@@ -14,9 +14,11 @@
           </button>
         </form>
         <ul>
-          <li *ngFor="let date of availableBalanceDates">
-            {{ date | date }}
-          </li>
+            <li *ngFor="let date of availableBalanceDates">
+              <a routerLink="/balances" [queryParams]="{date:date}">
+                {{ date | date }}
+              </a>
+            </li>
         </ul>
       </div>
     </app-card>

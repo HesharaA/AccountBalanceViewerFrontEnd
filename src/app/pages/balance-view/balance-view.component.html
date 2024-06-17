@@ -11,7 +11,7 @@
 <app-card *ngIf="!loading && isDateValid && balances.length > 0">
   <div class="title">
     <h3>Account Balances</h3>
-    <h5>at {{ date }}</h5>
+    <h5>at {{ date | date }}</h5>
   </div>
   <table>
     <tbody>
