@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { BalanceViewComponent } from './balance-view/balance-view.component';
-import { BalanceUploadComponent } from './balance-upload/balance-upload.component';
+import { BalanceViewComponent } from './pages/balance-view/balance-view.component';
+import { BalanceUploadComponent } from './pages/balance-upload/balance-upload.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/upload', pathMatch: 'full' },
