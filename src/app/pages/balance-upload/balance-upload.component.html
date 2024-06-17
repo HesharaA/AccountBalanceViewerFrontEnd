@@ -2,8 +2,8 @@
     <app-card>
         <div class="content">
             <h3>Upload Balance File</h3>
-        <form>
-        <input type="file" (change)="onFileSelected($event)" />
+        <form >
+        <input #fileInput type="file" (change)="onFileSelected($event)" />
         <button (click)="onUpload()" type="submit" [disabled]="isUploadButtonDisabled">Upload</button>
         </form>
         </div>
@@ -11,5 +11,6 @@
 </div>
 
 <app-loader *ngIf="showLoading"/>
+
 
 

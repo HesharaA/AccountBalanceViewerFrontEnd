@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BalanceService } from '../../services/balance.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-balance-upload',
   standalone: true,
-  imports: [LoaderComponent, CommonModule, CardComponent],
+  imports: [
+    LoaderComponent,
+    CommonModule,
+    CardComponent,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './balance-upload.component.html',
   styleUrl: './balance-upload.component.css',
 })
@@ -15,6 +23,9 @@ export class BalanceUploadComponent {
   selectedFile: any;
   isUploadButtonDisabled: boolean = true;
   showLoading: boolean = false;
+
+  @ViewChild('fileInput', { static: false })
+  InputVar: ElementRef | any;
 
   constructor(private balanceService: BalanceService) {}
 
@@ -28,12 +39,21 @@ export class BalanceUploadComponent {
   onUpload(): void {
     this.showLoading = true;
     if (this.selectedFile) {
-      this.balanceService
-        .uploadBalanceFile(this.selectedFile)
-        .subscribe((response) => {
+      this.balanceService.uploadBalanceFile(this.selectedFile).subscribe({
+        error: (e) => {
           this.showLoading = false;
-          console.log('File uploaded successfully', response);
-        });
+          this.selectedFile = null;
+          this.isUploadButtonDisabled = true;
+          this.InputVar.nativeElement.value = '';
+          window.alert(e.error);
+        },
+        complete: () => {
+          this.showLoading = false;
+          this.selectedFile = null;
+          this.isUploadButtonDisabled = true;
+          this.InputVar.nativeElement.value = '';
+        },
+      });
     }
   }
 }
