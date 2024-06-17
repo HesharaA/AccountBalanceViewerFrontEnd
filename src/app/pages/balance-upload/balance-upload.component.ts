@@ -38,7 +38,7 @@ export class BalanceUploadComponent implements OnInit {
         window.alert(e.error);
       },
       next: (data) => {
-        this.availableBalanceDates = data;
+        this.availableBalanceDates = data.reverse();
       },
     });
   }

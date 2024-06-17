@@ -4,18 +4,20 @@ import { NgFor } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-balance-view',
   standalone: true,
   templateUrl: './balance-view.component.html',
   styleUrl: './balance-view.component.css',
-  imports: [NgFor, CardComponent, CommonModule],
+  imports: [NgFor, CardComponent, CommonModule, LoaderComponent],
 })
 export class BalanceViewComponent implements OnInit {
   balances: Balance[] = [];
   date: string = '';
   dateParam: any = null;
+  loading: boolean = true;
 
   constructor(
     private balanceService: BalanceService,
@@ -28,6 +30,7 @@ export class BalanceViewComponent implements OnInit {
 
     if (!this.isDateValid) {
       window.alert('Invalid date provided');
+      this.loading = false;
     }
   }
 
@@ -35,10 +38,12 @@ export class BalanceViewComponent implements OnInit {
     if (this.isDateValid) {
       this.balanceService.getBalances(this.date).subscribe({
         error: (e) => {
+          this.loading = false;
           window.alert(e.error);
         },
         next: (data) => {
           this.balances = data;
+          this.loading = false;
         },
       });
     }
