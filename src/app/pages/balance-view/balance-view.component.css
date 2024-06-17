@@ -1,0 +1,19 @@
+table{
+    width: 100%;
+    margin-top: 10px;
+}
+
+table, th, td{
+    border-collapse: collapse;
+    border: 2px solid #e8e8e8;
+    color: dimgray;
+
+}
+
+th{
+    font-size: small;
+}
+
+td{
+    font-size: smaller;
+}

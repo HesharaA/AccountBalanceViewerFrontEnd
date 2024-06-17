@@ -1,9 +1,13 @@
-<h2>Account Balances</h2>
+<app-card>
+  <h3>Account Balances</h3>
 <table>
+<tbody>
   <tr >
     <th *ngFor="let balance of balances">{{ balance.accountName }}</th>
   </tr>
   <tr >
-    <td *ngFor="let balance of balances">{{ balance.balance }}</td>
+    <td *ngFor="let balance of balances">{{ balance.balance | currency }}</td>
   </tr>
+</tbody>
 </table>
+</app-card>
