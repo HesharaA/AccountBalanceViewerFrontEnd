@@ -17,8 +17,8 @@ export class BalanceService {
 
   constructor(private http: HttpClient) {}
 
-  getBalances(): Observable<Balance[]> {
-    return this.http.get<Balance[]>(this.apiUrl + '?date=2024.03.01');
+  getBalances(date: string): Observable<Balance[]> {
+    return this.http.get<Balance[]>(this.apiUrl + '?date=' + date);
   }
 
   uploadBalanceFile(file: File): Observable<any> {

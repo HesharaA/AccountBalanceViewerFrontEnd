@@ -3,6 +3,7 @@ import { Balance, BalanceService } from '../../services/balance.service';
 import { NgFor } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-balance-view',
@@ -13,13 +14,37 @@ import { CommonModule } from '@angular/common';
 })
 export class BalanceViewComponent implements OnInit {
   balances: Balance[] = [];
-  date: string = '2023.03.01';
+  date: string = '';
+  dateParam: any = null;
 
-  constructor(private balanceService: BalanceService) {}
+  constructor(
+    private balanceService: BalanceService,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe((params) => {
+      this.date = params['date'];
+      this.dateParam = Date.parse(this.date);
+    });
+
+    if (!this.isDateValid) {
+      window.alert('Invalid date provided');
+    }
+  }
 
   ngOnInit(): void {
-    this.balanceService.getBalances().subscribe((data) => {
-      this.balances = data;
-    });
+    if (this.isDateValid) {
+      this.balanceService.getBalances(this.date).subscribe({
+        error: (e) => {
+          window.alert(e.error);
+        },
+        next: (data) => {
+          this.balances = data;
+        },
+      });
+    }
+  }
+
+  get isDateValid() {
+    return isNaN(this.dateParam) === false;
   }
 }

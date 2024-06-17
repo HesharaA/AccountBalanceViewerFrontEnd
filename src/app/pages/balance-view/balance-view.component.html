@@ -1,16 +1,24 @@
-<app-card>
-<div class="title">
-  <h3>Account Balances</h3>
-  <h5> at {{date}}</h5>
+<div *ngIf="isDateValid && balances.length === 0" class="noBalances">
+  <h1>No account balances found for {{ date }}</h1>
 </div>
-<table>
-<tbody>
-  <tr >
-    <th *ngFor="let balance of balances">{{ balance.accountName }}</th>
-  </tr>
-  <tr >
-    <td *ngFor="let balance of balances">{{ balance.balance | currency }}</td>
-  </tr>
-</tbody>
-</table>
+<div *ngIf="!isDateValid" class="noBalances">
+  <h1>Invalid date!</h1>
+</div>
+<app-card *ngIf="isDateValid && balances.length > 0">
+  <div class="title">
+    <h3>Account Balances</h3>
+    <h5>at {{ date }}</h5>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th *ngFor="let balance of balances">{{ balance.accountName }}</th>
+      </tr>
+      <tr>
+        <td *ngFor="let balance of balances">
+          {{ balance.balance | currency }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </app-card>
