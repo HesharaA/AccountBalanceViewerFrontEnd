@@ -13,13 +13,16 @@
             Upload
           </button>
         </form>
-        <ul>
+        <div *ngIf="availableBalanceDates.length > 0" class="availableBalanceContainer">
+          <h5>Available Balances</h5>
+          <ul>
             <li *ngFor="let date of availableBalanceDates">
-              <a routerLink="/balances" [queryParams]="{date:date}">
+              <a routerLink="/balances" [queryParams]="{ date: date }">
                 {{ date | date }}
               </a>
             </li>
-        </ul>
+          </ul>
+        </div>
       </div>
     </app-card>
   </div>

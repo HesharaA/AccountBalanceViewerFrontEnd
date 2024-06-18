@@ -25,10 +25,10 @@ export class BalanceService {
     return this.http.get<Date[]>(this.apiUrl + '/distinct');
   }
 
-  uploadBalanceFile(file: File): Observable<any> {
+  uploadBalanceFile(file: File): Observable<Balance> {
     const formData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.http.post(`${this.apiUrl}/upload`, formData);
+    return this.http.post<Balance>(`${this.apiUrl}/upload`, formData);
   }
 }

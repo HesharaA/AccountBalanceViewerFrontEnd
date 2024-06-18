@@ -6,6 +6,7 @@ import { CardComponent } from '../../components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-balance-upload',
@@ -30,7 +31,7 @@ export class BalanceUploadComponent implements OnInit {
   InputVar: ElementRef | any;
   availableBalanceDates: Date[] = [];
 
-  constructor(private balanceService: BalanceService) {}
+  constructor(private balanceService: BalanceService, private router: Router) {}
 
   ngOnInit(): void {
     this.balanceService.getDistinctBalances().subscribe({
@@ -61,11 +62,14 @@ export class BalanceUploadComponent implements OnInit {
           this.InputVar.nativeElement.value = '';
           window.alert(e.error);
         },
-        complete: () => {
+        next: (balance) => {
           this.showLoading = false;
           this.selectedFile = null;
           this.isUploadButtonDisabled = true;
           this.InputVar.nativeElement.value = '';
+          this.router.navigate(['/balances'], {
+            queryParams: { date: balance.balanceDate },
+          });
         },
       });
     }
