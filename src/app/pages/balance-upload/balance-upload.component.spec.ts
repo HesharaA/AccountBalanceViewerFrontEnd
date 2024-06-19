@@ -18,7 +18,6 @@ describe('BalanceUploadComponent', () => {
       providers: [
         provideRouter([{ path: '**', component: BalanceViewComponent }]),
         provideHttpClient(),
-        provideHttpClientTesting(),
       ],
     }).compileComponents();
 

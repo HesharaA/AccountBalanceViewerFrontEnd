@@ -22,7 +22,9 @@ export class BalanceViewComponent implements OnInit {
   constructor(
     private balanceService: BalanceService,
     private route: ActivatedRoute
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.date = params['date'];
       this.dateParam = Date.parse(this.date);
@@ -32,9 +34,7 @@ export class BalanceViewComponent implements OnInit {
       window.alert('Invalid date provided');
       this.loading = false;
     }
-  }
 
-  ngOnInit(): void {
     if (this.isDateValid) {
       this.balanceService.getBalances(this.date).subscribe({
         error: (e) => {
