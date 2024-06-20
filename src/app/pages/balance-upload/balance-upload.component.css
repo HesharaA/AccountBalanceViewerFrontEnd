@@ -76,3 +76,11 @@ button:disabled{
 .availableBalanceContainer > h5{
     font-style: italic;
 }
+
+li:hover{
+    color: #e94f37;
+}
+
+li>a:hover{
+    color: #e94f37;
+}
