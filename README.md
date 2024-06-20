@@ -2,7 +2,7 @@
 
 Poject used to upload account balances using tab-seperated/excell files and view them.
 
-Check the deployed solution at [the Jondel corp](https://accountbalanceviewerfrontend.azurewebsites.net/upload)
+Check the deployed solution at [the Jondel corp](https://accountbalanceviewerfrontend.azurewebsites.net)
 
 ## Prerequisites
 

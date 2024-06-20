@@ -3,7 +3,7 @@ import { Balance, BalanceService } from '../../services/balance.service';
 import { NgFor } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { handleHttpError } from '../../utils/error-handler';
 
@@ -17,21 +17,28 @@ import { handleHttpError } from '../../utils/error-handler';
 export class BalanceViewComponent implements OnInit {
   balances: Balance[] = [];
   date: string = '';
-  dateParam: any = null;
   loading: boolean = true;
 
   constructor(
     private balanceService: BalanceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.date = params['date'];
-      this.dateParam = Date.parse(this.date);
     });
 
-    if (!this.isDateValid()) {
+    if (!this.date) {
+      this.date = new Date().toISOString();
+      const queryParams: Params = { date: this.date };
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams,
+      });
+    } else if (!this.isDateValid()) {
       window.alert('Invalid date provided');
       this.loading = false;
     }
@@ -51,6 +58,6 @@ export class BalanceViewComponent implements OnInit {
   }
 
   isDateValid(): boolean {
-    return isNaN(this.dateParam) === false;
+    return isNaN(Date.parse(this.date)) === false;
   }
 }
