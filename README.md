@@ -13,7 +13,7 @@ Check the deployed solution at [the Jondel corp](https://accountbalanceviewerfro
 ## Installation
 
 1. Clone the repository:
-   - `git clone <https://github.com/HesharaA/AccountBalanceViewerFrontEnd.git>`
+   - `git clone https://github.com/HesharaA/AccountBalanceViewerFrontEnd.git`
    - `cd frontend`
 2. Install dependencies:
    - `npm install`
