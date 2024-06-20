@@ -61,8 +61,8 @@ button:disabled{
 .availableBalanceContainer{
     display: flex;
     flex-direction: column;
-    align-items: start;
-    margin-top: 10px;
+    align-items: center;
+    margin-top: 17px;
     width: 100%;
 }
 
@@ -73,8 +73,15 @@ button:disabled{
     margin-top: 4px;
 }
 
-.availableBalanceContainer > h5{
-    font-style: italic;
+.availableBalanceContainer > h4{
+    font-style: italic
+}
+
+.availableBalanceContainer > p{
+    color: lightgray;
+    font-size: small;
+    margin: 0px;
+    
 }
 
 li:hover{

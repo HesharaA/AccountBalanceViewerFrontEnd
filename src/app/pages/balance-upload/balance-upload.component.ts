@@ -26,16 +26,17 @@ export class BalanceUploadComponent implements OnInit {
   selectedFile: any;
   isUploadButtonDisabled: boolean = true;
   showLoading: boolean = false;
+  availableBalanceDates: Date[] | null = null;
 
   @ViewChild('fileInput', { static: false })
   InputVar: ElementRef | any;
-  availableBalanceDates: Date[] = [];
 
   constructor(private balanceService: BalanceService, private router: Router) {}
 
   ngOnInit(): void {
     this.balanceService.getDistinctBalances().subscribe({
       error: (e) => {
+        this.availableBalanceDates = [];
         window.alert(e.error);
       },
       next: (data) => {
