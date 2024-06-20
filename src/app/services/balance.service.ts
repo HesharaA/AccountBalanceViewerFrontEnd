@@ -13,7 +13,8 @@ export type Balance = {
   providedIn: 'root',
 })
 export class BalanceService {
-  private apiUrl = 'http://localhost:5258/api/balance';
+  private apiUrl =
+    'https://accountbalanceviewerapi.azurewebsites.net/api/balance';
 
   constructor(private http: HttpClient) {}
 

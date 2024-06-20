@@ -1,27 +1,37 @@
 # AccountBalanceViewer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.4.
+Poject used to upload account balances using tab-seperated/excell files and view them.
 
-## Development server
+Check the deployed solution at [the Jondel corp](https://accountbalanceviewerfrontend.azurewebsites.net/upload)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Prerequisites
 
-## Code scaffolding
+- Node.js (v14 or higher, v18 recommended)
+- Angular CLI (v18.0.4 recommended)
+- Goodle Chrome (LTS recommended) 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Installation
 
-## Build
+1. Clone the repository:
+   - `git clone <https://github.com/HesharaA/AccountBalanceViewerFrontEnd.git>`
+   - `cd frontend`
+2. Install dependencies:
+   - `npm install`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Start development server
 
-## Running unit tests
+1. If a local backend is used to run the system, make sure it is up and running. Copy your local domain which your backend is pointed at and replace it to the `apiUrl` which is found in `balance.service.ts` ---
+   eg: `{LOCAL_DOMAIN}/api/balance`
+2. Run `npm run start`
+3. Check for the app running on http://localhost:4200
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Build for production
 
-## Running end-to-end tests
+Run `npm run build`. The build artifacts will be stored in the `dist/` directory.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Runnings tests
 
-## Further help
+Run `npm run test` and wait for the browser to open and complete the tests.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
