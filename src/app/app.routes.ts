@@ -3,7 +3,7 @@ import { BalanceViewComponent } from './pages/balance-view/balance-view.componen
 import { BalanceUploadComponent } from './pages/balance-upload/balance-upload.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/upload', pathMatch: 'full' },
   { path: 'balances', component: BalanceViewComponent },
   { path: 'upload', component: BalanceUploadComponent },
+  { path: '', redirectTo: '/upload', pathMatch: 'full' },
 ];
