@@ -1,5 +1,5 @@
-<div *ngIf="!loading && isDateValid && balances.length === 0" class="noBalances">
-  <h1>No account balances found for {{ date }}</h1>
+<div *ngIf="!loading && isDateValid() && balances.length === 0" class="noBalances">
+  <h1>No account balances found for {{ date | date}}</h1>
 </div>
 
 <div *ngIf="!loading &&!isDateValid" class="noBalances">
@@ -8,7 +8,7 @@
 
 <app-loader *ngIf="loading"/>
 
-<app-card *ngIf="!loading && isDateValid && balances.length > 0">
+<app-card *ngIf="!loading && isDateValid() && balances.length > 0">
   <div class="title">
     <h3>Account Balances</h3>
     <h5>at {{ date | date }}</h5>

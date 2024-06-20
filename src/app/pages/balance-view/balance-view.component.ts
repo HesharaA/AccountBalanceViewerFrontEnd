@@ -5,6 +5,7 @@ import { CardComponent } from '../../components/card/card.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { handleHttpError } from '../../utils/error-handler';
 
 @Component({
   selector: 'app-balance-view',
@@ -30,16 +31,16 @@ export class BalanceViewComponent implements OnInit {
       this.dateParam = Date.parse(this.date);
     });
 
-    if (!this.isDateValid) {
+    if (!this.isDateValid()) {
       window.alert('Invalid date provided');
       this.loading = false;
     }
 
-    if (this.isDateValid) {
+    if (this.isDateValid()) {
       this.balanceService.getBalances(this.date).subscribe({
         error: (e) => {
           this.loading = false;
-          window.alert(e.error);
+          handleHttpError(e);
         },
         next: (data) => {
           this.balances = data;
@@ -49,7 +50,7 @@ export class BalanceViewComponent implements OnInit {
     }
   }
 
-  get isDateValid() {
+  isDateValid(): boolean {
     return isNaN(this.dateParam) === false;
   }
 }

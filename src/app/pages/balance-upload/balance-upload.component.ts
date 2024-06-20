@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { handleHttpError } from '../../utils/error-handler';
 
 @Component({
   selector: 'app-balance-upload',
@@ -37,12 +38,19 @@ export class BalanceUploadComponent implements OnInit {
     this.balanceService.getDistinctBalances().subscribe({
       error: (e) => {
         this.availableBalanceDates = [];
-        window.alert(e.error);
+        handleHttpError(e);
       },
       next: (data) => {
         this.availableBalanceDates = data.reverse();
       },
     });
+  }
+
+  private resetFileInput(): void {
+    this.showLoading = false;
+    this.selectedFile = null;
+    this.isUploadButtonDisabled = true;
+    this.InputVar.nativeElement.value = '';
   }
 
   onFileSelected(event: any): void {
@@ -57,17 +65,11 @@ export class BalanceUploadComponent implements OnInit {
     if (this.selectedFile) {
       this.balanceService.uploadBalanceFile(this.selectedFile).subscribe({
         error: (e) => {
-          this.showLoading = false;
-          this.selectedFile = null;
-          this.isUploadButtonDisabled = true;
-          this.InputVar.nativeElement.value = '';
-          window.alert(e.error);
+          this.resetFileInput();
+          handleHttpError(e);
         },
         next: (balance) => {
-          this.showLoading = false;
-          this.selectedFile = null;
-          this.isUploadButtonDisabled = true;
-          this.InputVar.nativeElement.value = '';
+          this.resetFileInput();
           this.router.navigate(['/balances'], {
             queryParams: { date: balance.balanceDate },
           });
