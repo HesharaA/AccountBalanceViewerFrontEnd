@@ -113,7 +113,7 @@ export class BalanceUploadComponent implements OnInit {
         next: (balance) => {
           this.resetFileInput();
           this.router.navigate(['/balances'], {
-            queryParams: { date: balance.balanceDate },
+            queryParams: { date: balance[0].balanceDate },
           });
         },
       });

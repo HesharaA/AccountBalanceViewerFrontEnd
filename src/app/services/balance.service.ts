@@ -22,8 +22,7 @@ export class BalanceService {
    * @description The base URL for the balance-related API endpoints.
    * @private
    */
-  private apiUrl =
-    'https://accountbalanceviewerapi.azurewebsites.net/api/balance';
+  private apiUrl = 'http://localhost:5258/api/balance';
 
   /**
    * @param {HttpClient} http - The HttpClient used to make HTTP requests.
@@ -50,12 +49,12 @@ export class BalanceService {
   /**
    * @description Uploads a balance file to the server.
    * @param {File} file - The balance file to be uploaded.
-   * @returns {Observable<Balance>} An observable containing the balance entry created from the uploaded file.
+   * @returns {Observable<Balance[]>} An observable containing the all the balances added to the database.
    */
-  uploadBalanceFile(file: File): Observable<Balance> {
+  uploadBalanceFile(file: File): Observable<Balance[]> {
     const formData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.http.post<Balance>(`${this.apiUrl}/upload`, formData);
+    return this.http.post<Balance[]>(`${this.apiUrl}/upload`, formData);
   }
 }
