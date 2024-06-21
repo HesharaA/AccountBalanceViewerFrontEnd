@@ -27,7 +27,7 @@ Check the deployed solution at [the Jondel corp](https://accountbalanceviewerfro
 
 ## Build for production
 
-Run `npm run build`. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build`. Runs all the unit tests and builds the project where the artifacts will be stored in the `dist/` directory.
 
 ## Runnings tests
 
