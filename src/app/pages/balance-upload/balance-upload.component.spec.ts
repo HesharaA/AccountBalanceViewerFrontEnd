@@ -3,7 +3,6 @@ import { BalanceUploadComponent } from './balance-upload.component';
 import { BalanceViewComponent } from '../balance-view/balance-view.component';
 import { Router, provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { fakeAsync } from '@angular/core/testing';
 import { tick } from '@angular/core/testing';
