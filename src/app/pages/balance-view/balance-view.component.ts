@@ -3,7 +3,7 @@ import { Balance, BalanceService } from '../../services/balance.service';
 import { NgFor } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { handleHttpError } from '../../utils/error-handler';
 
@@ -16,29 +16,25 @@ import { handleHttpError } from '../../utils/error-handler';
 })
 export class BalanceViewComponent implements OnInit {
   balances: Balance[] = [];
-  date: string = '';
   loading: boolean = true;
 
-  constructor(
-    private balanceService: BalanceService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  get date(): string {
+    const queryParams = this.router.routerState.snapshot.root.queryParams;
+    return queryParams['date'];
+  }
+
+  constructor(private balanceService: BalanceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.date = params['date'];
-    });
-
     if (!this.date) {
-      this.date = new Date().toISOString();
-      const queryParams: Params = { date: this.date };
-
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams,
+      const queryParams = { date: new Date().toISOString() };
+      this.router.navigate(['balances'], {
+        queryParams: queryParams,
       });
-    } else if (!this.isDateValid()) {
+      this.loading = false;
+    }
+
+    if (!this.isDateValid() && this.date) {
       window.alert('Invalid date provided');
       this.loading = false;
     }

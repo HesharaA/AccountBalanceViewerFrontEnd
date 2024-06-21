@@ -2,7 +2,7 @@
   <h1>No account balances found for {{ date | date}}</h1>
 </div>
 
-<div *ngIf="!loading &&!isDateValid" class="noBalances">
+<div *ngIf="!loading && !isDateValid()" class="noBalances">
   <h1>Invalid date!</h1>
 </div>
 

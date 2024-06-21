@@ -6,45 +6,31 @@ import {
 } from '@angular/core/testing';
 import { BalanceViewComponent } from './balance-view.component';
 import { Balance, BalanceService } from '../../services/balance.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { Router, provideRouter } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { LoaderComponent } from '../../components/loader/loader.component';
-import { CardComponent } from '../../components/card/card.component';
 import { provideHttpClient } from '@angular/common/http';
 
 describe('BalanceViewComponent', () => {
   let component: BalanceViewComponent;
   let fixture: ComponentFixture<BalanceViewComponent>;
   let balanceService: jasmine.SpyObj<BalanceService>;
-  let queryParamsSubject: BehaviorSubject<any>;
+  let router: Router;
 
   beforeEach(async () => {
     balanceService = jasmine.createSpyObj('BalanceService', ['getBalances']);
-    queryParamsSubject = new BehaviorSubject({});
 
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        BalanceViewComponent,
-        LoaderComponent,
-        CardComponent,
-      ],
+      imports: [BalanceViewComponent],
       providers: [
         { provide: BalanceService, useValue: balanceService },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: queryParamsSubject.asObservable(),
-          },
-        },
+        provideRouter([{ path: '**', component: BalanceViewComponent }]),
         provideHttpClient(),
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BalanceViewComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
@@ -52,20 +38,21 @@ describe('BalanceViewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should alert and show invalid date when date query parameter is invalid', fakeAsync(() => {
-    spyOn(window, 'alert');
-    queryParamsSubject.next({ date: 'invalid-date' });
+  it('should alert and show invalid date when date query parameter is invalid', fakeAsync(async () => {
+    await router.navigate(['balances'], {
+      queryParams: { date: 'invalid-date' },
+    });
     fixture.detectChanges();
     tick();
 
-    expect(component.isDateValid).toBeFalse();
+    expect(component.isDateValid()).toBeFalse();
     const invalidDate = fixture.debugElement.query(
       By.css('.noBalances h1')
     ).nativeElement;
     expect(invalidDate.textContent).toContain('Invalid date!');
   }));
 
-  it('should load balances when date query parameter is valid', fakeAsync(() => {
+  it('should load balances when date query parameter is valid', fakeAsync(async () => {
     const mockBalances = [
       {
         accountName: 'Account 1',
@@ -99,8 +86,13 @@ describe('BalanceViewComponent', () => {
       } as Balance,
     ];
 
-    queryParamsSubject.next({ date: '2020-03-01' });
-    expect(component.isDateValid).toBeTrue();
+    await router.navigate(['balances'], {
+      queryParams: { date: '2020-03-01' },
+    });
+    fixture.detectChanges();
+    tick();
+
+    expect(component.isDateValid()).toBeTrue();
 
     component.balances = mockBalances;
     fixture.detectChanges();
@@ -112,14 +104,18 @@ describe('BalanceViewComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('td')).length).toBe(5);
   }));
 
-  it('should show no balances message when there are no balances', fakeAsync(() => {
-    queryParamsSubject.next({ date: '2020-03-01' });
+  it('should show no balances message when there are no balances', fakeAsync(async () => {
+    await router.navigate(['balances'], {
+      queryParams: { date: '2020-03-01' },
+    });
+    fixture.detectChanges();
+    tick();
 
     component.balances = [];
     fixture.detectChanges();
     tick();
 
-    expect(component.isDateValid).toBeTrue();
+    expect(component.isDateValid()).toBeTrue();
     expect(component.balances).toEqual([]);
     expect(component.loading).toBeFalse();
 
@@ -127,7 +123,7 @@ describe('BalanceViewComponent', () => {
       By.css('.noBalances h1')
     ).nativeElement;
     expect(noBalances.textContent).toContain(
-      'No account balances found for 2020-03-01'
+      'No account balances found for Mar 1, 2020'
     );
   }));
 });
