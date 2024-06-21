@@ -8,21 +8,23 @@
 
 <app-loader *ngIf="loading"/>
 
-<app-card *ngIf="!loading && isDateValid() && balances.length > 0">
-  <div class="title">
-    <h3>Account Balances</h3>
-    <h5>at {{ date | date }}</h5>
-  </div>
-  <table>
-    <tbody>
-      <tr>
-        <th *ngFor="let balance of balances">{{ balance.accountName }}</th>
-      </tr>
-      <tr>
-        <td *ngFor="let balance of balances">
-          {{ balance.balance | currency }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</app-card>
+<div class="tableWrapper">
+  <app-card *ngIf="!loading && isDateValid() && balances.length > 0">
+    <div class="title">
+      <h3>Account Balances</h3>
+      <h5>at {{ date | date }}</h5>
+    </div>
+    <table>
+      <tbody>
+        <tr>
+          <th *ngFor="let balance of balances">{{ balance.accountName }}</th>
+        </tr>
+        <tr>
+          <td *ngFor="let balance of balances">
+            {{ balance.balance | currency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </app-card>
+</div>

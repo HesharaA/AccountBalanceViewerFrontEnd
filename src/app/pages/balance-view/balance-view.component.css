@@ -1,3 +1,7 @@
+.tableWrapper{
+    margin: 20px;
+}
+
 table{
     width: 100%;
     margin-top: 10px;
