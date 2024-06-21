@@ -22,7 +22,8 @@ export class BalanceService {
    * @description The base URL for the balance-related API endpoints.
    * @private
    */
-  private apiUrl = 'http://localhost:5258/api/balance';
+  private apiUrl =
+    'https://accountbalanceviewerapi.azurewebsites.net/api/balance';
 
   /**
    * @param {HttpClient} http - The HttpClient used to make HTTP requests.
