@@ -1,29 +1,40 @@
 <div>
   <div class="contentWrapper">
     <app-card>
-      <div class="content">
-        <h3>Upload Balance File</h3>
-        <form>
-          <input #fileInput type="file" (change)="onFileSelected($event)" />
-          <button
-            (click)="onUpload()"
-            type="submit"
-            [disabled]="isUploadButtonDisabled"
-          >
-            Upload
-          </button>
-        </form>
-        <div class="availableBalanceContainer">
-          <h4>Available Balances</h4>
-          <p *ngIf="availableBalanceDates == null">Loading...</p>
-          <p *ngIf="availableBalanceDates != null && availableBalanceDates.length <= 0">No balances found</p>
-          <ul *ngIf="availableBalanceDates != null && availableBalanceDates.length > 0">
-            <li *ngFor="let date of availableBalanceDates">
-              <a routerLink="/balances" [queryParams]="{ date: date }">
-                {{ date | date }}
-              </a>
-            </li>
-          </ul>
+      <div *ngIf="!rbacService.isUserAuthenticated" class="userList">
+        <h3>Select user</h3>
+        <ul class="users">
+        <li (click)="onSelectUser('ADMINISTRATOR')">Administrator</li>
+        <li (click)="onSelectUser('USER')">User</li>
+        </ul>
+      </div>
+      <div *ngIf="rbacService.isUserAuthenticated">
+        <div class="content">
+          <div *ngIf="rbacService.isGranted('ADMINISTRATOR')" class="uploadBalances">
+            <h3>Upload Balance File</h3>
+            <form>
+              <input #fileInput type="file" (change)="onFileSelected($event)" />
+              <button
+                (click)="onUpload()"
+                type="submit"
+                [disabled]="isUploadButtonDisabled"
+              >
+                Upload
+              </button>
+            </form>
+          </div>
+          <div class="availableBalanceContainer">
+            <h4>Available Balances</h4>
+            <p *ngIf="availableBalanceDates == null">Loading...</p>
+            <p *ngIf="availableBalanceDates != null && availableBalanceDates.length <= 0">No balances found</p>
+            <ul *ngIf="availableBalanceDates != null && availableBalanceDates.length > 0">
+              <li *ngFor="let date of availableBalanceDates">
+                <a routerLink="/balances" [queryParams]="{ date: date }">
+                  {{ date | date }}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </app-card>

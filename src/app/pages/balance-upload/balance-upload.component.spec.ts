@@ -6,10 +6,23 @@ import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { fakeAsync } from '@angular/core/testing';
 import { tick } from '@angular/core/testing';
+import { Roles } from '../../services/rbac.servies';
 
 describe('BalanceUploadComponent', () => {
   let component: BalanceUploadComponent;
   let fixture: ComponentFixture<BalanceUploadComponent>;
+
+  function selectUser(userRole: Roles) {
+    const liElements = fixture.debugElement.queryAll(By.css('li'));
+    expect(liElements.length).toBe(2);
+
+    liElements[userRole === Roles.ADMINISTRATOR ? 0 : 1].triggerEventHandler(
+      'click',
+      null
+    );
+    fixture.detectChanges();
+    tick();
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,7 +42,26 @@ describe('BalanceUploadComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should select admin role', fakeAsync(() => {
+    selectUser(Roles.ADMINISTRATOR);
+    spyOn(component, 'onUpload');
+
+    const fileInput = fixture.debugElement.query(By.css('input[type=file]'));
+
+    expect(fileInput).toBeTruthy();
+  }));
+
+  it('should select user role', fakeAsync(() => {
+    selectUser(Roles.USER);
+    spyOn(component, 'onUpload');
+
+    const fileInput = fixture.debugElement.query(By.css('input[type=file]'));
+
+    expect(fileInput).toBeFalsy();
+  }));
+
   it('should select file and upload', fakeAsync(() => {
+    selectUser(Roles.ADMINISTRATOR);
     spyOn(component, 'onUpload');
 
     const testingFile = new File([''], 'test-file.txt');
@@ -52,6 +84,7 @@ describe('BalanceUploadComponent', () => {
   }));
 
   it('should click upload without file', fakeAsync(() => {
+    selectUser(Roles.ADMINISTRATOR);
     spyOn(component, 'onUpload');
 
     let uploadButton = fixture.debugElement.nativeElement.querySelector(
@@ -64,6 +97,7 @@ describe('BalanceUploadComponent', () => {
   }));
 
   it('should click on available balance', fakeAsync(() => {
+    selectUser(Roles.ADMINISTRATOR);
     component.availableBalanceDates = [
       new Date('2023-03-01T00:00:00'),
       new Date('2024-03-31T00:00:00'),
