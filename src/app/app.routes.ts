@@ -4,6 +4,6 @@ import { BalanceUploadComponent } from './pages/balance-upload/balance-upload.co
 
 export const routes: Routes = [
   { path: 'balances', component: BalanceViewComponent },
-  { path: 'upload', component: BalanceUploadComponent },
-  { path: '', redirectTo: '/upload', pathMatch: 'full' },
+  { path: '', component: BalanceUploadComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

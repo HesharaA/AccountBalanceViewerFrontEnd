@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { BalanceService } from '../../services/balance.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { CommonModule } from '@angular/common';
@@ -8,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { handleHttpError } from '../../utils/error-handler';
+import { RbacService, Roles, User } from '../../services/rbac.servies';
 
 /**
  * @description
@@ -29,6 +36,11 @@ import { handleHttpError } from '../../utils/error-handler';
   styleUrl: './balance-upload.component.css',
 })
 export class BalanceUploadComponent implements OnInit {
+  /**
+   * @description service instance used for authentication.
+   */
+  readonly rbacService = inject(RbacService);
+
   /**
    * @description The file selected by the user for upload.
    */
@@ -96,6 +108,32 @@ export class BalanceUploadComponent implements OnInit {
     if (this.selectedFile !== null || this.selectedFile !== undefined) {
       this.isUploadButtonDisabled = false;
     }
+  }
+
+  /**
+   * @description Used to set the current user in the system.
+   */
+  onSelectUser(userRole: string): void {
+    let newUser: User;
+
+    switch (userRole) {
+      case Roles.ADMINISTRATOR:
+        newUser = {
+          name: 'Admin',
+          role: Roles.ADMINISTRATOR,
+        };
+        break;
+      case Roles.USER:
+        newUser = {
+          name: 'User',
+          role: Roles.USER,
+        };
+        break;
+      default:
+        return;
+    }
+
+    this.rbacService.setAuthenticatedUser(newUser);
   }
 
   /**
